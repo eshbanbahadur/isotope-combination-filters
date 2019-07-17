@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Isotope - Combination Filters</title>  
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <h1>Isotope - Combination Filters</h1>
+
+<div id="filters-map">
+
+  <!--div class="ui-group"-->
+    <h3>Color</h3>
+    <div class="button-group js-radio-button-group" data-filter-group="color">
+		<ul>
+			<li class="button is-checked"  data-filter="">Any</li>
+			<li class="button"data-filter=".red">Red</li>
+			<li class="button" data-filter=".blue">Blue</li>
+			<li class="button"data-filter=".yellow">Yellow</li>
+		</ul>	
+	
+      <!--button class="button is-checked" data-filter="">any</button>
+      <button class="button" data-filter=".red">red</button>
+      <button class="button" data-filter=".blue">blue</button>
+      <button class="button" data-filter=".yellow">yellow</button-->
+    </div>
+  <!--/div-->
+
+  <!--div class="ui-group"-->
+    
+	<h3>Size</h3>
+    <div class="button-group js-radio-button-group" data-filter-group="size">
+      <button class="button is-checked" data-filter="">any</button>
+      <button class="button" data-filter=".small">small</button>
+      <button class="button" data-filter=".wide">wide</button>
+      <button class="button" data-filter=".big">big</button>
+      <button class="button" data-filter=".tall">tall</button>
+    </div>
+	
+  <!--/div-->
+  <!--div class="ui-group"-->
+  
+    <h3>Shape</h3>
+    <div class="button-group js-radio-button-group" data-filter-group="shape">
+      <button class="button is-checked" data-filter="">any</button>
+      <button class="button" data-filter=".round">round</button>
+      <button class="button" data-filter=".square">square</button>
+    </div>
+  <!--/div-->
+
+</div>
+
+<div class="isotope">
+  <div class="color-shape small round red"></div>
+  <div class="color-shape small round blue"></div>
+  <div class="color-shape small round yellow"></div>
+  <div class="color-shape small square red"></div>
+  <div class="color-shape small square blue"></div>
+  <div class="color-shape small square yellow"></div>
+  <div class="color-shape wide round red"></div>
+  <div class="color-shape wide round blue"></div>
+  <div class="color-shape wide round yellow"></div>
+  <div class="color-shape wide square red"></div>
+  <div class="color-shape wide square blue"></div>
+  <div class="color-shape wide square yellow"></div>
+  <div class="color-shape big round red"></div>
+  <div class="color-shape big round blue"></div>
+  <div class="color-shape big round yellow"></div>
+  <div class="color-shape big square red"></div>
+  <div class="color-shape big square blue"></div>
+  <div class="color-shape big square yellow"></div>
+  <div class="color-shape tall round red"></div>
+  <div class="color-shape tall round blue"></div>
+  <div class="color-shape tall round yellow"></div>
+  <div class="color-shape tall square red"></div>
+  <div class="color-shape tall square blue"></div>
+  <div class="color-shape tall square yellow"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://npmcdn.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+
+<script>
+jQuery( function() {
+  // init Isotope
+  var $container = jQuery('.isotope').isotope({
+    itemSelector: '.color-shape'
+  });
+
+  // store filter for each group
+  var filters = {};
+
+  jQuery('#filters-map').on( 'click', '.button', function() {
+  
+    var $this2 = jQuery(this);
+    // get group key
+    var $buttonGroup = $this2.parents('.button-group');
+    var filterGroup = $buttonGroup.attr('data-filter-group');	
+	
+    // set filter for group
+    filters[ filterGroup ] = $this2.attr('data-filter');
+
+    // combine filters
+    var filterValue = '';
+    for ( var prop in filters ) {
+      filterValue += filters[ prop ];
+    }
+	
+    // set filter for Isotope
+    $container.isotope({ filter: filterValue });
+  });
+
+  // change is-checked class on buttons
+  jQuery('.button-group').each( function( i, buttonGroup ) {
+    var $buttonGroup = jQuery( buttonGroup );
+    $buttonGroup.on( 'click', 'button', function( event ) {
+      $buttonGroup.find('.is-checked').removeClass('is-checked');
+      jQuery( event.currentTarget ).addClass('is-checked');
+    });
+  });
+  
+});
+
+</script>
+
+</body>
+</html>
